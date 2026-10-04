@@ -1,4 +1,5 @@
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 import { SetContextLink } from '@apollo/client/link/context';
 import { ErrorLink } from '@apollo/client/link/error';
 import { CombinedGraphQLErrors } from '@apollo/client/errors';
@@ -9,7 +10,8 @@ import { CombinedGraphQLErrors } from '@apollo/client/errors';
  */
 const GRAPHQL_URL = import.meta.env.VITE_GRAPHQL_URL || '/graphql';
 
-const httpLink = new HttpLink({ uri: GRAPHQL_URL });
+// Usamos createUploadLink no lugar de HttpLink para suportar envio de arquivos (multipart)
+const httpLink = createUploadLink({ uri: GRAPHQL_URL });
 
 /**
  * Injeta o JWT no header Authorization — o backend lê `Bearer <token>`

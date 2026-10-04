@@ -204,25 +204,19 @@ export default function ReporteFormPage() {
       };
 
       if (isEdicao) {
-        // Não há mutation de edição no schema GraphQL → REST
+        // A API REST continua aqui para o update caso a API GraphQL não suporte imagens no update
         dados.imagens = imagensExistentes;
         await reportesApi.atualizar(id, dados);
         await client.refetchQueries({ include: [GET_REPORTE] });
         toast.success('Reporte atualizado com sucesso!');
         navigate(`/reportes/${id}`);
-      } else if (arquivos.length === 0) {
-        // Sem fotos → mutation GraphQL criarReporte(entrada: CriarReporteEntrada!)
+      } else {
+        // Criação 100% via GraphQL (agora com suporte ao scalar Upload)
         const { data } = await criarReporteMutation({
-          variables: { entrada: { ...dados, endereco: dados.endereco || null, imagens: [] } },
+          variables: { entrada: { ...dados, endereco: dados.endereco || null, imagens: arquivos } },
         });
         toast.success('Reporte criado com sucesso! 🎉');
         navigate(`/reportes/${data.criarReporte.id}`);
-      } else {
-        // Com fotos → multipart/form-data (o schema GraphQL não possui scalar Upload;
-        // `imagens: [String]` só aceita URLs já hospedadas)
-        const res = await reportesApi.criar(dados, arquivos);
-        toast.success('Reporte criado com sucesso! 🎉');
-        navigate(`/reportes/${getId(res.data.reporte)}`);
       }
     } catch (err) {
       toast.error(err.message || 'Erro ao salvar reporte.');
