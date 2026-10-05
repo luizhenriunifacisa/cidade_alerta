@@ -1,0 +1,1642 @@
+{
+  "info": {
+    "_postman_id": "4d9ba229-d98e-4a9e-8061-96e54dc02a68",
+    "name": "CidadeAlerta",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39693787"
+  },
+  "item": [
+    {
+      "name": "registrar_usuario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 201) {\r",
+              "    const resposta = pm.response.json();\r",
+              "    pm.environment.set(\"token\", resposta.data.token);\r",
+              "    pm.environment.set(\"user_id\", resposta.data.usuario.id);\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nome\": \"Luiz\",\r\n    \"email\": \"luiz123@abc.com\",\r\n    \"senha\": \"12345678\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/auth/registrar",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "auth",
+            "registrar"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login_usuario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if(pm.response.code === 200) {\r",
+              "    const resposta = pm.response.json();\r",
+              "    pm.environment.set(\"token\", resposta.data.token);\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"luiz123@abc.com\",\r\n    \"senha\": \"12345678\"\r\n}"
+        },
+        "url": {
+          "raw": "{{url_principal}}/auth/login",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "obter_perfil",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{url_principal}}/auth/perfil",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "auth",
+            "perfil"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "criar_categoria",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {\r",
+              "    const resposta = pm.response.json();\r",
+              "    pm.environment.set(\"categoria_id\", resposta.data.categoria._id);\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nome\": \"Buracos\",\r\n    \"descricao\": \"Ruas com problemas de buracos\"\r\n}"
+        },
+        "url": {
+          "raw": "{{url_principal}}/categorias",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "categorias"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listar_categorias",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{url_principal}}/categorias",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "categorias"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listar_categoria",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{url_principal}}/categorias/{{categoria_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "categorias",
+            "{{categoria_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "atualizar_categoria",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nome\": \"Buraco na rua\",\r\n  \"descricao\": \"Buracos, crateras e desnível em vias públicas\",\r\n  \"isAtivo\": true\r\n}\r\n"
+        },
+        "url": {
+          "raw": "{{url_principal}}/categorias/{{categoria_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "categorias",
+            "{{categoria_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deletar_categoria",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{url_principal}}/categorias/{{categoria_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "categorias",
+            "{{categoria_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "criar_reporte",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {\r",
+              "    const resposta = pm.response.json();\r",
+              "    pm.environment.set(\"reporte_id\", resposta.data.reporte._id);\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"titulo\": \"Buraco gigante na Av. Paulista\",\r\n  \"descricao\": \"Há um buraco muito grande próximo ao número 1000 da Avenida João Pessoa, causando risco a pedestres e veículos.\",\r\n  \"categoria\": \"{{categoria_id}}\",\r\n  \"localizacao\": {\r\n    \"type\": \"Point\",\r\n    \"coordinates\": [-46.6533, -23.5505]\r\n  },\r\n  \"endereco\": \"Av. João Pessoa, 1000 - João Pessoa, PB\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/reportes",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "criar_reporte_com_imagens",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "titulo",
+              "value": "Poste sem luz na rua augusta",
+              "type": "text",
+              "uuid": "d4a21de4-1a24-4de0-92d5-08beb3c78a63"
+            },
+            {
+              "key": "descricao",
+              "value": "Poste de iluminação apagado a 1 semana",
+              "type": "text",
+              "uuid": "90a4cdca-dc0e-4aba-bac5-ef58afb21f2a"
+            },
+            {
+              "key": "categoria",
+              "value": "6a9e4e2c3dad17605e397c99",
+              "type": "text",
+              "uuid": "bd9f5712-037a-4e86-a8cf-8b44b9688b89"
+            },
+            {
+              "key": "localizacao[type]",
+              "value": "Point",
+              "type": "text",
+              "uuid": "41204392-d7ee-4e3c-a445-498d16ad8e38"
+            },
+            {
+              "key": "localizacao[coordinates][0]",
+              "value": "-46.6561",
+              "type": "text",
+              "uuid": "2ed953e9-cadf-4f13-a256-6a3f6e723d05"
+            },
+            {
+              "key": "localizacao[coordinates][1]",
+              "value": "-23.5534",
+              "type": "text",
+              "uuid": "df15e575-7a18-4c7e-a9de-ae1fd117538e"
+            },
+            {
+              "key": "endereco",
+              "value": "Rua João Pessoa, 1000",
+              "type": "text",
+              "uuid": "ad56dbab-6c0d-4c03-86b7-04d74cae54c5"
+            },
+            {
+              "key": "imagens",
+              "type": "file",
+              "uuid": "66197e10-575d-4427-9a50-e578f9c1903a",
+              "src": "/C:/Users/robin/Downloads/alagamento.jpg"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url_principal}}/reportes",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listar_reportes_com_filtro",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "titulo",
+              "value": "Poste sem luz na rua augusta",
+              "type": "text",
+              "uuid": "d4a21de4-1a24-4de0-92d5-08beb3c78a63"
+            },
+            {
+              "key": "descricao",
+              "value": "Poste de iluminação apagado a 1 semana",
+              "type": "text",
+              "uuid": "90a4cdca-dc0e-4aba-bac5-ef58afb21f2a"
+            },
+            {
+              "key": "categoria",
+              "value": "6a9e4e2c3dad17605e397c99",
+              "type": "text",
+              "uuid": "bd9f5712-037a-4e86-a8cf-8b44b9688b89"
+            },
+            {
+              "key": "localizacao[type]",
+              "value": "Point",
+              "type": "text",
+              "uuid": "41204392-d7ee-4e3c-a445-498d16ad8e38"
+            },
+            {
+              "key": "localizacao[coordinates][0]",
+              "value": "-46.6561",
+              "type": "text",
+              "uuid": "2ed953e9-cadf-4f13-a256-6a3f6e723d05"
+            },
+            {
+              "key": "localizacao[coordinates][1]",
+              "value": "-23.5534",
+              "type": "text",
+              "uuid": "df15e575-7a18-4c7e-a9de-ae1fd117538e"
+            },
+            {
+              "key": "endereco",
+              "value": "Rua Augusta, 1000",
+              "type": "text",
+              "uuid": "ad56dbab-6c0d-4c03-86b7-04d74cae54c5"
+            },
+            {
+              "key": "imagens",
+              "type": "file",
+              "uuid": "66197e10-575d-4427-9a50-e578f9c1903a",
+              "src": "/C:/Users/robin/Downloads/alagamento.jpg"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url_principal}}/reportes?dataInicio=2025-01-01",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "aberto",
+              "disabled": true
+            },
+            {
+              "key": "categoria",
+              "value": "{{categoria_id}}",
+              "disabled": true
+            },
+            {
+              "key": "dataInicio",
+              "value": "2025-01-01"
+            },
+            {
+              "key": "dataFim",
+              "value": "2025-12-31",
+              "disabled": true
+            },
+            {
+              "key": "pagina",
+              "value": "1",
+              "disabled": true
+            },
+            {
+              "key": "limite",
+              "value": "10",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "meus_reportes",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url_principal}}/reportes/autenticado",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes",
+            "autenticado"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "obter_reporte_por_id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url_principal}}/reportes/{{reporte_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes",
+            "{{reporte_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "atualizar_reporte",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"titulo\": \"Buraco ENORME na Av. ABC (URGENTE)\",\r\n  \"descricao\": \"Atualização: o buraco aumentou significativamente e está causando acidentes.\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/reportes/{{reporte_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes",
+            "{{reporte_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "alterar_status_reporte",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"status\": \"aberto\",\r\n  \"observacao\": \"Equipe de manutenção acionada para verificação no local.\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/reportes/{{reporte_id}}/status",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes",
+            "{{reporte_id}}",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "obter_historico_status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url_principal}}/reportes/{{reporte_id}}/historico",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes",
+            "{{reporte_id}}",
+            "historico"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deletar_reporte",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url_principal}}/reportes/{{reporte_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes",
+            "{{reporte_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "criar_comentario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {\r",
+              "    const resposta = pm.response.json();\r",
+              "    pm.environment.set(\"comentario_id\", resposta.data.comentario._id);\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"conteudo\": \"Passo por esse buraco todo dia, está piorando a cada semana!\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/reportes/{{reporte_id}}/comentarios",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes",
+            "{{reporte_id}}",
+            "comentarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listar_comentarios_de_um_reporte",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"conteudo\": \"Passo por esse buraco todo dia, está piorando a cada semana!\"\r\n}\r\n"
+        },
+        "url": {
+          "raw": "{{url_principal}}/reportes/{{reporte_id}}/comentarios",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "reportes",
+            "{{reporte_id}}",
+            "comentarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deletar_comentario",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url_principal}}/comentarios/{{comentario_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "comentarios",
+            "{{comentario_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listar_usuarios",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "titulo",
+              "value": "Poste sem luz na rua augusta",
+              "type": "text",
+              "uuid": "d4a21de4-1a24-4de0-92d5-08beb3c78a63"
+            },
+            {
+              "key": "descricao",
+              "value": "Poste de iluminação apagado a 1 semana",
+              "type": "text",
+              "uuid": "90a4cdca-dc0e-4aba-bac5-ef58afb21f2a"
+            },
+            {
+              "key": "categoria",
+              "value": "6a9e4e2c3dad17605e397c99",
+              "type": "text",
+              "uuid": "bd9f5712-037a-4e86-a8cf-8b44b9688b89"
+            },
+            {
+              "key": "localizacao[type]",
+              "value": "Point",
+              "type": "text",
+              "uuid": "41204392-d7ee-4e3c-a445-498d16ad8e38"
+            },
+            {
+              "key": "localizacao[coordinates][0]",
+              "value": "-46.6561",
+              "type": "text",
+              "uuid": "2ed953e9-cadf-4f13-a256-6a3f6e723d05"
+            },
+            {
+              "key": "localizacao[coordinates][1]",
+              "value": "-23.5534",
+              "type": "text",
+              "uuid": "df15e575-7a18-4c7e-a9de-ae1fd117538e"
+            },
+            {
+              "key": "endereco",
+              "value": "Rua Augusta, 1000",
+              "type": "text",
+              "uuid": "ad56dbab-6c0d-4c03-86b7-04d74cae54c5"
+            },
+            {
+              "key": "imagens",
+              "type": "file",
+              "uuid": "66197e10-575d-4427-9a50-e578f9c1903a",
+              "src": "/C:/Users/robin/Downloads/alagamento.jpg"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url_principal}}/usuarios",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "usuarios"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listar_usuario_por_id",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url_principal}}/usuarios/{{user_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "usuarios",
+            "{{user_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "atualizar_usuario",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nome\": \"João da Silva Santos\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/usuarios/{{user_id}}",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "usuarios",
+            "{{user_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "alterar_perfil_usuario",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"perfil\": \"admin\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/usuarios/{{user_id}}/papel",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "usuarios",
+            "{{user_id}}",
+            "papel"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "alterar_status_usuario",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"ativo\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/usuarios/{{user_id}}/status",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "usuarios",
+            "{{user_id}}",
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "estatisticas_gerais",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url_principal}}/dashboard/estatistica",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "dashboard",
+            "estatistica"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "reportes_categorias",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url_principal}}/dashboard/categoria",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "dashboard",
+            "categoria"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "reportes_por_periodo",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{url_principal}}/dashboard/periodo?dias=30",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "dashboard",
+            "periodo"
+          ],
+          "query": [
+            {
+              "key": "dias",
+              "value": "30",
+              "description": "Número de dias para consultar"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url_principal}}/health",
+          "host": [
+            "{{url_principal}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "registro_graphql",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const resposta = pm.response.json();\r",
+              "\r",
+              "if (resposta.data && resposta.data.registro) {\r",
+              "    pm.environment.set(\"token\", resposta.data.registro.token);\r",
+              "    pm.environment.set(\"user_id\", resposta.data.registro.usuario.id);\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation($entrada: RegistroEntrada!) {\r\n  registro(entrada: $entrada) {\r\n    token\r\n    usuario {\r\n      id\r\n      nome\r\n      email\r\n      perfil\r\n      ativo\r\n    }\r\n  }\r\n}\r\n",
+            "variables": "{\r\n  \"entrada\": {\r\n    \"nome\": \"Vitorio\",\r\n    \"email\": \"vitorioabc@gmail.com\",\r\n    \"senha\": \"12345678\"\r\n  }\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login_usuario_graphql",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const resposta = pm.response.json();\r",
+              "\r",
+              "if (resposta.data && resposta.data.registro) {\r",
+              "    pm.environment.set(\"token\", resposta.data.registro.token);\r",
+              "    pm.environment.set(\"user_id\", resposta.data.registro.usuario.id);\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation($email: String!, $senha: String!) {\r\n  login(email: $email, senha: $senha) {\r\n    token\r\n    usuario {\r\n      id\r\n      nome\r\n      email\r\n      perfil\r\n      ativo\r\n    }\r\n  }\r\n}\r\n",
+            "variables": "{\r\n  \"email\": \"vitorioabc@gmail.com\",\r\n  \"senha\": \"12345678\"\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "criar_reporte_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation($entrada: CriarReporteEntrada!) {\r\n  criarReporte(entrada: $entrada) {\r\n    id\r\n    titulo\r\n    descricao\r\n    status\r\n    endereco\r\n    imagens\r\n    createdAt\r\n    categoria {\r\n      id\r\n      nome\r\n    }\r\n    autor {\r\n      id\r\n      nome\r\n      email\r\n    }\r\n    localizacao {\r\n      type\r\n      coordinates\r\n    }\r\n  }\r\n}",
+            "variables": "{\r\n  \"entrada\": {\r\n    \"titulo\": \"Semáforo quebrado na Rua XV\",\r\n    \"descricao\": \"O semáforo do cruzamento da Rua XV de Novembro com a Rua Marechal está quebrado há uma semana.\",\r\n    \"categoria\": \"{{categoria_id}}\",\r\n    \"localizacao\": {\r\n      \"type\": \"Point\",\r\n      \"coordinates\": [-49.2648, -25.4284]\r\n    },\r\n    \"endereco\": \"Rua XV de Novembro, Centro - Curitiba, PR\",\r\n    \"imagens\": []\r\n  }\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "atualizar_status_reporte_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation($id: ID!, $status: String!, $observacao: String) {\r\n  atualizarStatusReporte(id: $id, status: $status, observacao: $observacao) {\r\n    id\r\n    titulo\r\n    status\r\n    categoria {\r\n      nome\r\n    }\r\n    autor {\r\n      nome\r\n    }\r\n  }\r\n}\r\n",
+            "variables": "{\r\n  \"id\": \"{{reporte_id}}\",\r\n  \"status\": \"aberto\",\r\n  \"observacao\": \"Equipe de trânsito não notificada para reparo do semáforo.\"\r\n}\r\n"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "adicionar_comentario_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "mutation($reporteId: ID!, $conteudo: String!) {\r\n  adicionarComentario(reporteId: $reporteId, conteudo: $conteudo) {\r\n    id\r\n    conteudo\r\n    createdAt\r\n    reporte\r\n    autor {\r\n      id\r\n      nome\r\n      email\r\n    }\r\n  }\r\n}\r\n",
+            "variables": "{\r\n  \"reporteId\": \"{{reporte_id}}\",\r\n  \"conteudo\": \"Esse problema causou muitos danos na nossa rua, por favor que seja resolvido o mais rápido possível.\"\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "reportes_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query($status: String, $categoria: ID, $pagina: Int, $limite: Int) {\r\n  reportes(status: $status, categoria: $categoria, pagina: $pagina, limite: $limite) {\r\n    reportes {\r\n      id\r\n      titulo\r\n      descricao\r\n      status\r\n      endereco\r\n      imagens\r\n      createdAt\r\n      categoria {\r\n        id\r\n        nome\r\n      }\r\n      autor {\r\n        id\r\n        nome\r\n        email\r\n      }\r\n      localizacao {\r\n        type\r\n        coordinates\r\n      }\r\n    }\r\n    paginacao {\r\n      total\r\n      pagina\r\n      limite\r\n      paginas\r\n    }\r\n  }\r\n}\r\n",
+            "variables": "{\r\n  \"status\": \"em_andamento\",\r\n  \"pagina\": 1,\r\n  \"limite\": 5\r\n}\r\n"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "categorias_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  categorias {\r\n    id\r\n    nome\r\n    descricao\r\n    isAtivo\r\n  }\r\n}",
+            "variables": "{\r\n  \"categoriaId\": null\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "reportes_por_categoria_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  reportesPorCategoria {\r\n    categoria {\r\n      _id\r\n      nome\r\n    }\r\n    quantidade\r\n  }\r\n}\r\n",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "categoria_por_id_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query($id: ID!) {\r\n  categoria(id: $id) {\r\n    id\r\n    nome\r\n    descricao\r\n    isAtivo\r\n  }\r\n}",
+            "variables": "{\r\n  \"id\": \"{{categoria_id}}\"\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "estatisticas_dashboard_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  estatisticasDashboard {\r\n    total\r\n    porStatus {\r\n      _id\r\n      quantidade\r\n    }\r\n  }\r\n}\r\n",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "reporte_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query($id: ID!) {\r\n  reporte(id: $id) {\r\n    id\r\n    titulo\r\n    descricao\r\n    status\r\n    endereco\r\n    imagens\r\n    createdAt\r\n    updatedAt\r\n    categoria {\r\n      id\r\n      nome\r\n    }\r\n    autor {\r\n      id\r\n      nome\r\n      email\r\n    }\r\n    localizacao {\r\n      type\r\n      coordinates\r\n    }\r\n  }\r\n}",
+            "variables": "{\r\n  \"id\": \"{{reporte_id}}\"\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "reportes_por_status_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query {\r\n  reportesPorStatus {\r\n    _id\r\n    quantidade\r\n  }\r\n}\r\n",
+            "variables": ""
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "reportes_por_periodo_graphql",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "graphql",
+          "graphql": {
+            "query": "query($dias: Int) {\r\n  reportesPorPeriodo(dias: $dias) {\r\n    data\r\n    quantidade\r\n  }\r\n}",
+            "variables": "{\r\n  \"dias\": 30\r\n}"
+          }
+        },
+        "url": {
+          "raw": "{{url_principal_graphql}}/graphql",
+          "host": [
+            "{{url_principal_graphql}}"
+          ],
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
