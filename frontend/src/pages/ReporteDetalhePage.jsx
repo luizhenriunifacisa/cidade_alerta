@@ -2,11 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client/react';
 import { reportesApi } from '../services/api';
-import {
-  GET_REPORTE,
-  ATUALIZAR_STATUS_REPORTE,
-  ADICIONAR_COMENTARIO,
-} from '../graphql/operations';
+import {GET_REPORTE, ATUALIZAR_STATUS_REPORTE, ADICIONAR_COMENTARIO,} from '../graphql/operations';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import {
@@ -31,12 +27,10 @@ export default function ReporteDetalhePage() {
   const [observacao, setObservacao] = useState('');
   const [mostrarAlterarStatus, setMostrarAlterarStatus] = useState(false);
 
-  // Query GraphQL: reporte(id)
   const { data, loading, error } = useQuery(GET_REPORTE, { variables: { id } });
   const reporte = data?.reporte;
   const carregando = loading && !data;
 
-  // Mutations GraphQL
   const [atualizarStatusMutation, { loading: alterandoStatus }] = useMutation(ATUALIZAR_STATUS_REPORTE);
   const [adicionarComentarioMutation, { loading: enviando }] = useMutation(ADICIONAR_COMENTARIO);
 
@@ -47,7 +41,6 @@ export default function ReporteDetalhePage() {
     }
   }, [error, loading, data]);
 
-  // Comentários e histórico não têm query no schema GraphQL → REST
   const carregarHistorico = useCallback(() => {
     reportesApi.historico(id)
       .then((res) => setHistorico(res.data?.historico || []))
@@ -80,7 +73,6 @@ export default function ReporteDetalhePage() {
   const alterarStatus = async () => {
     if (!novoStatus) return;
     try {
-      // O Apollo atualiza automaticamente o Reporte normalizado no cache (id + status)
       await atualizarStatusMutation({
         variables: { id, status: novoStatus, observacao: observacao || null },
       });
@@ -88,7 +80,8 @@ export default function ReporteDetalhePage() {
       setMostrarAlterarStatus(false);
       setObservacao('');
       carregarHistorico();
-    } catch (err) {
+    }
+    catch (err) {
       toast.error(err.message || 'Erro ao alterar status.');
     }
   };
@@ -96,7 +89,6 @@ export default function ReporteDetalhePage() {
   const deletarReporte = async () => {
     if (!window.confirm('Tem certeza que deseja deletar este reporte?')) return;
     try {
-      // Não há mutation de exclusão no schema → REST
       await reportesApi.deletar(id);
       toast.success('Reporte deletado.');
       navigate('/reportes');
@@ -125,13 +117,11 @@ export default function ReporteDetalhePage() {
   return (
     <div className="page">
       <div className="container">
-        {/* Breadcrumb */}
         <div style={{ marginBottom: 'var(--space-6)', fontSize: 'var(--font-size-sm)' }}>
           <Link to="/reportes" style={{ color: 'var(--color-text-muted)' }}>← Voltar aos reportes</Link>
         </div>
 
         <div className="report-detail fade-in">
-          {/* Main Content */}
           <div className="report-detail-main">
             <div style={{ marginBottom: 'var(--space-6)' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-4)', marginBottom: 'var(--space-3)' }}>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client/react';
 import { GET_DASHBOARD } from '../graphql/operations';
 import { STATUS_LABELS } from '../utils/helpers';
+import * as Lucide from 'lucide-react';
 
 const STATUS_COLORS = {
   aberto: '#3b82f6',
@@ -11,33 +12,41 @@ const STATUS_COLORS = {
 };
 
 const STATUS_ICONS = {
-  aberto: '📂',
-  em_andamento: '⚙️',
-  resolvido: '✅',
-  fechado: '🔒',
+  aberto: Lucide.FolderOpen,
+  em_andamento: Lucide.settings,
+  resolvido: Lucide.CheckCircle2,
+  fechado: Lucide.Lock,
 };
 
-export default function DashboardPage() {
+export default function DashboardPage(){
+
   const [dias, setDias] = useState(30);
 
-  // Uma única requisição GraphQL busca os 3 conjuntos de dados do dashboard
-  const { data, loading } = useQuery(GET_DASHBOARD, { variables: { dias } });
+  const {data, loading} = useQuery(GET_DASHBOARD, { variables: { dias }});
 
   const estatisticas = data?.estatisticasDashboard;
+
   const porCategoria = data?.reportesPorCategoria || [];
+
   const porPeriodo = data?.reportesPorPeriodo || [];
+
   const carregando = loading && !data;
 
-  const getQuantidadePorStatus = (status) => {
-    if (!estatisticas?.porStatus) return 0;
-    const item = estatisticas.porStatus.find((s) => s._id === status);
+  const getQuantidadePorStatus = (status) =>{
+
+    if (!estatisticas?.porStatus){
+      return 0;
+    }
+
+    const item = estatisticas.porStatus.find((s) =>s._id === status);
+
     return item?.quantidade || 0;
   };
 
-  const maxCategoria = Math.max(...porCategoria.map((c) => c.quantidade), 1);
-  const maxPeriodo = Math.max(...porPeriodo.map((p) => p.quantidade), 1);
+  const maxCategoria = Math.max(...porCategoria.map((c) =>c.quantidade), 1);
+  const maxPeriodo = Math.max(...porPeriodo.map((p) =>p.quantidade), 1);
 
-  if (carregando) {
+  if(carregando) {
     return (
       <div className="page">
         <div className="container">
@@ -50,18 +59,21 @@ export default function DashboardPage() {
     );
   }
 
-  return (
+  return(
     <div className="page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">📊 Dashboard</h1>
+          <h1 className="page-title" style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+            <Lucide.BarChart3 size={28} /> Dashboard
+          </h1>
           <p className="page-subtitle">Visão geral dos alertas urbanos</p>
         </div>
 
-        {/* Stat Cards */}
         <div className="stats-grid">
           <div className="stat-card fade-in" style={{ '--stat-color': 'var(--color-accent)' }}>
-            <div className="stat-card-icon">📊</div>
+            <div className="stat-card-icon">
+              <Lucide.BarChart3 size={24} color="var(--color-accent)" />
+            </div>
             <div className="stat-card-value">{estatisticas?.total || 0}</div>
             <div className="stat-card-label">Total de Reportes</div>
           </div>
@@ -88,9 +100,7 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {/* Charts Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 'var(--space-6)' }}>
-          {/* By Category */}
           <div className="chart-container fade-in">
             <h3 className="chart-title">Reportes por Categoria</h3>
             {porCategoria.length === 0 ? (
@@ -119,7 +129,6 @@ export default function DashboardPage() {
             )}
           </div>
 
-          {/* By Period */}
           <div className="chart-container fade-in">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-5)' }}>
               <h3 className="chart-title" style={{ marginBottom: 0 }}>Reportes por Período</h3>

@@ -4,28 +4,34 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 
 export default function LoginPage() {
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [carregando, setCarregando] = useState(false);
-  const { login } = useAuth();
+
+  const {login} = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) =>{
     e.preventDefault();
-    if (!email || !senha) {
+
+    if(!email || !senha) {
       toast.error('Preencha todos os campos.');
       return;
     }
 
     setCarregando(true);
-    try {
+
+    try{
       await login(email, senha);
       toast.success('Login realizado com sucesso!');
       navigate('/');
-    } catch (err) {
+    }
+    catch(err) {
       toast.error(err.message || 'Erro ao fazer login.');
-    } finally {
+    }
+    finally {
       setCarregando(false);
     }
   };
@@ -43,44 +49,16 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} id="login-form">
           <div className="form-group">
-            <label className="form-label" htmlFor="email">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              className="form-input"
-              placeholder="seu@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="email"
-              required
-            />
+            <label className="form-label" htmlFor="email">Email</label>
+            <input id="email" type="email" className="form-input" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required/>
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="senha">
-              Senha
-            </label>
-            <input
-              id="senha"
-              type="password"
-              className="form-input"
-              placeholder="••••••••"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              autoComplete="current-password"
-              required
-            />
+            <label className="form-label" htmlFor="senha">Senha</label>
+            <input id="senha" type="password" className="form-input" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} autoComplete="current-password" required/>
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary btn-lg"
-            style={{ width: '100%', marginTop: 'var(--space-4)' }}
-            disabled={carregando}
-            id="btn-login"
-          >
+          <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%', marginTop: 'var(--space-4)' }} disabled={carregando} id="btn-login">
             {carregando ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
